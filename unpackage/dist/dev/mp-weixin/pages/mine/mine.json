@@ -1,0 +1,7 @@
+{
+  "navigationStyle": "default",
+  "usingComponents": {
+    "r-icon": "/components/rIcon/index",
+    "r-info": "/components/mine/rInfo/index"
+  }
+}

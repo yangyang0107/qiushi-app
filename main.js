@@ -9,6 +9,9 @@ App.mpType = 'app'
 // 设置顶部通知栏的高度
 Vue.prototype.$statusBarHeight = uni.getSystemInfoSync().statusBarHeight;
 
+// 
+Vue.prototype.$store = store
+
 const app = new Vue({
     store,
     ...App

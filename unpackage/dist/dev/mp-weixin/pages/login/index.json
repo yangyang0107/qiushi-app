@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "r-icon": "/components/rIcon/index",
+    "r-form": "/components/login/rForm/index",
+    "r-third": "/components/login/rThird/index"
+  }
+}

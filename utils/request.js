@@ -1,5 +1,10 @@
 // 引入uniRequest
 import uniRequest from 'uni-request';
+// 引入vuex 
+import store from '../store'
+let token = store.state.token ? store.state.token : '';
+
+// console.log(token);
 
 // 公共地址
 uniRequest.defaults.baseURL = 'http://ceshi2.dishait.cn/api/v1';
@@ -7,7 +12,7 @@ uniRequest.defaults.baseURL = 'http://ceshi2.dishait.cn/api/v1';
 // #ifdef H5
 uniRequest.defaults.baseURL = '/api';
 // #endif
-
+uniRequest.defaults.headers.common['token'] = token;
 
 
 // 请求拦截

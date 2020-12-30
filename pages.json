@@ -1,5 +1,9 @@
 {
     "pages": [{
+            "path": "pages/index/index",
+            "style": {}
+        },
+        {
             "path": "pages/login/index",
             "style": {}
         },
@@ -13,17 +17,25 @@
         },
         {
             "path": "pages/mine/mine",
+            "style": {
+                // #ifdef MP
+                "navigationStyle": "default"
+                    // #endif
+            }
+        },
+
+        {
+            "path": "pages/set/set",
             "style": {}
         },
         {
-            "path": "pages/index/index",
+            "path": "pages/history/history",
             "style": {}
         }
     ],
-    "easycom": "pages/login/index",
     "globalStyle": {
         "navigationBarTextStyle": "black",
-        "navigationBarTitleText": "uni-app",
+        "navigationBarTitleText": "糗事百嗑",
         "navigationBarBackgroundColor": "#F8F8F8",
         "backgroundColor": "#F8F8F8",
         "navigationStyle": "custom"

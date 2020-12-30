@@ -1,5 +1,5 @@
 <template>
-  <text class="iconfont" :class="iname" :style="{fontSize:`${isize}rpx`,color:icolor}"></text>
+  <text class="iconfont" :class="iname" :style="{fontSize:`${isize}rpx`,color:icolor}" @tap="rTap"></text>
 </template>
 
 <script>
@@ -11,11 +11,11 @@ export default {
     },
     icolor: {
       type: String,
-      default: ""
+      default: "#CBCBCB"
     },
     isize: {
       type: String,
-      default: 30
+      default: '30'
     }
   },
   components: {},
@@ -23,7 +23,11 @@ export default {
     return {};
   },
   onLoad() {},
-  methods: {}
+  methods: {
+    rTap(){
+      this.$emit("r-tap");
+    }
+  }
 };
 </script>
 

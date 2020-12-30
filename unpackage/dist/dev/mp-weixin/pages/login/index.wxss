@@ -1,0 +1,11 @@
+
+.log_close.data-v-4586967a {
+  position: absolute;
+  top: 55rpx;
+  left: 10rpx;
+  font-weight: bold;
+}
+.log_img.data-v-4586967a {
+  width: 100%;
+}
+

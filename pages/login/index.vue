@@ -1,10 +1,9 @@
 <template>
   <view>
-    <!-- <view :style="{height:`${statusBarHeight}px`}"></view> -->
     <!-- 背景图片 -->
     <view class="py-4">
       <image mode="widthFix" src="/static/common/loginhead.png" class="log_img" />
-      <r-icon iname="icon-guanbi" icolor="#000" isize="40" class="log_close" />
+      <r-icon iname="icon-guanbi" icolor="#000" isize="40" class="log_close" @r-tap="toMine"/>
     </view>
     <!-- 表单组件 -->
     <r-form />
@@ -20,6 +19,8 @@ import rIcon from "../../components/rIcon";
 import rForm from "../../components/login/rForm";
 // 引入第三方登录组件
 import rThird from "../../components/login/rThird";
+// 
+import { switchTab } from '../../utils/asyncUNI';
 export default {
   components: { rIcon, rForm, rThird },
   data() {
@@ -28,7 +29,11 @@ export default {
     };
   },
   onLoad() {},
-  methods: {}
+  methods: {
+    toMine(){
+        switchTab({url:'/pages/mine/mine'});
+    }
+  }
 };
 </script>
 

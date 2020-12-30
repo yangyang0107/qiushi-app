@@ -1,0 +1,1 @@
+<text data-event-opts="{{[['tap',[['rTap',['$event']]]]]}}" class="{{['iconfont data-v-d6b0163a',iname]}}" style="{{'font-size:'+(isize+'rpx')+';'+('color:'+(icolor)+';')}}" bindtap="__e"></text>

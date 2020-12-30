@@ -1,0 +1,30 @@
+
+.log_code.data-v-75648b08 {
+  font-size: 22rpx;
+  color: #979797;
+  width: 160rpx;
+  text-align: center;
+  height: 55rpx;
+  line-height: 55rpx;
+  background: #f4f4f4;
+}
+.log_btn.data-v-75648b08 {
+  text-align: center;
+  height: 80rpx;
+  line-height: 80rpx;
+  -webkit-border-radius: 25px;
+          border-radius: 25px;
+}
+.inp.data-v-75648b08 {
+  font-size: 30rpx;
+  color: #969696;
+}
+.btn-color.data-v-75648b08 {
+  background: #00b9b9 !important;
+  color: #d4d4d4;
+}
+.btn.data-v-75648b08 {
+  background: teal !important;
+  color: #fff;
+}
+

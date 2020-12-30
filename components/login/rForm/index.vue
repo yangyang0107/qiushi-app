@@ -1,6 +1,8 @@
 <template>
   <view class="px-4">
+    <!--  -->
     <view class="border-bottom flex py-2 align-center">
+      <!-- 手机号登录 -->
       <text class="font-weight-bold" v-show="!logFlag">+86</text>
       <input
         v-model="query.phone"
@@ -9,9 +11,18 @@
         class="pl-2 font-weight-bold inp"
         v-show="!logFlag"
       />
-      <input type="text" placeholder="昵称/手机号/邮箱" class="font-weight-bold inp" v-show="logFlag" />
+      <!-- 昵称/手机号/邮箱登录 -->
+      <input
+        v-model="uquery.username"
+        type="text"
+        placeholder="昵称/手机号/邮箱"
+        class="font-weight-bold inp"
+        v-show="logFlag"
+      />
     </view>
+
     <view class="border-bottom flex py-2 justify-between align-center">
+      <!-- 验证码输入框 -->
       <input
         v-model="query.code"
         type="text"
@@ -19,28 +30,40 @@
         class="inp font-weight-bold"
         v-show="!logFlag"
       />
-      <view
+      <button
         class="log_code rounded"
         v-show="!logFlag"
         @tap="getPhoneCode"
-      >{{codeFlag?codeNum:'获取验证码'}}</view>
-      <input type="text" placeholder="请输入密码" class="inp font-weight-bold" v-show="logFlag" />
+        :disabled="codeFlag?true:false"
+      >{{codeFlag?codeNum:'获取验证码'}}</button>
+      <!-- 密码输入框 -->
+      <input
+        v-model="uquery.password"
+        type="text"
+        placeholder="请输入密码"
+        class="inp font-weight-bold"
+        v-show="logFlag"
+      />
       <view style="fontSize:22rpx; width:140rpx;" class="pt-1" v-show="logFlag">忘记密码？</view>
     </view>
+    <!-- 登录按钮 -->
     <button
       type="primary"
       class="border my-3 log_btn"
       @tap="register"
-      :disabled="query.phone !='' && query.code != '' ? false :true"
-      :class="[query.phone !='' && query.code != '' ? 'btn':'btn-color']"
+      :disabled="(query.phone !='' && query.code != '') || (uquery.username != '' && uquery.password != '') ? false :true"
+      :class="[(query.phone !='' && query.code != '') || (uquery.username != '' && uquery.password != '') ? 'btn':'btn-color']"
     >登录</button>
-    <view class="text-center w-100 my-5 flex align-center justify-center" @tap="logFlag=!logFlag">
+
+
+    <view class="text-center w-100 my-5 flex align-center justify-center" @tap="changeLogflag">
       <text style="fontSize:24rpx;color:#484848;" v-show="!logFlag">账号密码登录</text>
       <text style="fontSize:24rpx;color:#484848;" v-show="logFlag">验证码登录</text>
       <r-icon iname="icon-jinru" icolor="#DADADA" isize="30" />
     </view>
   </view>
 </template>
+
 
 <script>
 // 引入字体图标
@@ -49,21 +72,40 @@ import rIcon from "../../rIcon";
 import { showToast } from "../../../utils/asyncUNI";
 // 引入接口配置文件
 import api from "../../../model/login";
+// 引入数组存储配置文件
+import { setToken, setInfo } from "../../../utils/auth";
 export default {
   components: { rIcon },
   data() {
     return {
-      logFlag: false,
+      logFlag: true,
       codeFlag: false,
-      codeNum: 5,
+      codeNum: 10,
+      // 手机号/验证码
       query: {
         phone: "",
         code: ""
+      },
+      // 账号/密码
+      uquery: {
+        username: "",
+        password: ""
       }
     };
   },
   onLoad() {},
   methods: {
+    // 登录切换
+    changeLogflag(){
+      this.logFlag = !this.logFlag;
+      if(this.logFlag){
+        this.query.phone = '';
+        this.query.code = '';
+      }else{
+        this.uquery.username = '';
+        this.uquery.password = ''
+      }
+    },
     // 表单验证
     rules() {
       if (!this.logFlag) {
@@ -75,31 +117,29 @@ export default {
           return false;
         }
       } else {
-        console.log(222);
+         return false;
       }
     },
     // 获取验证码
     async getPhoneCode() {
-      this.codeFlag = true;
       // 调用验证规格函数
       if (this.rules() == false) {
         return false;
       }
-      // // 13673802120
+      // 13673802120
+      this.codeFlag = true;
       var timer = setInterval(() => {
         this.codeNum -= 1;
-        if (this.codeNum < 0) {
+        if (this.codeNum < 1) {
           clearInterval(timer);
-          this.codeNum = 5;
+          this.codeNum = 10;
           this.codeFlag = false;
         }
       }, 1000);
-
       let phone = Number(this.query.phone);
       let res = await api.getCode(phone);
       if (res.errorCode == false) {
         // let code = Number(res.msg.slice(4,res.msg.length));
-
         showToast({ title: res.msg, duration: 5000 });
       } else {
         showToast({ title: res.msg });
@@ -111,14 +151,35 @@ export default {
       if (!this.logFlag) {
         console.log("手机号登录");
         if (this.rules() == false) {
-        return false;
-      }
+          return false;
+        }
         //手机号登录
-        // let res = await api.phonelogin(this.query);
-        // console.log(res);
+        let res = await api.phonelogin(this.query);
+        if ((res.msg == "登录成功")) {
+         
+          this.$store.commit('settoken',res.data.token)
+          this.$store.commit('setinfo',res.data)
+          uni.switchTab({
+            url: "/pages/mine/mine"
+          });
+        }else{
+          showToast({ title: res.msg });
+        }
       } else {
         // 账号密码登录
-        console.log("账号密码登录");
+        console.log(this.uquery);
+        
+        let res = await api.accountlogin(this.uquery);
+        console.log(res);
+        if ((res.msg == "登录成功")) {
+          // setToken(res.data.token);
+          // setInfo(res.data);
+          uni.switchTab({
+            url: "/pages/mine/mine"
+          });
+        }else{
+          showToast({ title: res.msg });
+        }
       }
     }
   }
@@ -129,7 +190,7 @@ export default {
 .log_code {
   font-size: 22rpx;
   color: #979797;
-  width: 140rpx;
+  width: 160rpx;
   text-align: center;
   height: 55rpx;
   line-height: 55rpx;

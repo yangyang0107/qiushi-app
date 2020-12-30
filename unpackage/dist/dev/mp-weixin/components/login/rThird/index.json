@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "r-icon": "/components/rIcon/index"
+  }
+}

@@ -1,0 +1,10 @@
+
+.third-party.data-v-0ac3e0b9 {
+  width: 100rpx;
+  height: 100rpx;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
+  text-align: center;
+  line-height: 100rpx;
+}
+
